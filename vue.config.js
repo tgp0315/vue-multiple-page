@@ -3,19 +3,19 @@ const resolve = dir => path.resolve(__dirname, dir);
 const isProduction = process.env.NODE_ENV !== "development";
 const glob = require("glob");
 function getEntry(url) {
-  let entrys = {};
+  const entrys = {};
   glob.sync(url).forEach(item => {
-    let urlArr = item.split("/").splice(-3);
+    const urlArr = item.split("/").splice(-3);
     entrys[urlArr[1]] = {
-      entry: 'src/views/' + urlArr[1] + '/' + 'main.ts',
-      template: 'public/index.html',
-      filename: urlArr[1] + '.html',
-      title: 'views-' + urlArr[1]
-    }
-  })
+      entry: "src/views/" + urlArr[1] + "/" + "main.ts",
+      template: "public/" + urlArr[1] + ".html",
+      filename: urlArr[1] + ".html",
+      title: "views-" + urlArr[1]
+    };
+  });
   return entrys;
 }
-let pages = getEntry("./src/views/**?/*.vue");
+const pages = getEntry("./src/views/**?/*.vue");
 module.exports = {
   publicPath: "./", // 基本路径
   outputDir: "dist", // 输出文件目录
@@ -108,6 +108,43 @@ module.exports = {
     overlay: {
       warnings: false,
       errors: true
+    },
+    historyApiFallback: {
+      rewrites: [
+        // 将所有多入口遍历成路径解析项
+        // ...(() => {
+        //   const writes = [];
+        //   for (const prop in multipleEntrys) {
+        //     // 使用属性名匹配为正则
+        //     // 这就是上面“需要对该页面的所有路由添加同文件夹名的公共路径”的原因
+        //     writes.push({
+        //       from: `/^\/${prop}/`,
+        //       // 使用属性名读取模板文件
+        //       // 这就是上面“模板文件名称需要与文件夹名称相同”的原因
+        //       to: path.posix.join("/", `${prop}.html`)
+        //     });
+        //   }
+        //   console.log(writes);
+        //   return writes;
+        // })(),
+        // 匹配所有路径一定要在最后，否则该匹配之后的项，不会被执行
+        {
+          from: /^\/page/,
+          to: "/page.html"
+        },
+        {
+          from: /^\/mobile/,
+          to: "/page1.html"
+        },
+        {
+          from: /^\/pc/,
+          to: "/page2.html"
+        },
+        {
+          from: /.*/,
+          to: path.posix.join("/", "404.html")
+        }
+      ]
     },
     hot: true,
     host: "0.0.0.0",
