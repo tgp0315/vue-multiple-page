@@ -5,7 +5,7 @@ Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
-    path: "/",
+    path: "/aaa",
     name: "tree",
     component: resolve => require(["./views/tree.vue"], resolve)
   }

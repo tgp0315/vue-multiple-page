@@ -109,14 +109,6 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    historyApiFallback: {
-      disableDotRule: true,
-      rewrites: [
-        { from: /^\/page1/, to: "/page1.html" },
-        { from: /^\/page2/, to: "/page2.html" },
-        { from: /./, to: "/page.html" }
-      ]
-    },
     hot: true,
     host: "0.0.0.0",
     port: 8088,

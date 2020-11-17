@@ -22,3 +22,9 @@ yarn lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### 跳转方式
+```
+http://localhost:8088/page1.html#/aaa
+```
