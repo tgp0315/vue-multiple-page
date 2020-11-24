@@ -10,10 +10,14 @@ const routes: Array<RouteConfig> = [
     component: resolve => require(["./views/form.vue"], resolve)
   }
 ];
-
-const router = new VueRouter({
+const HISTORYBASS:object = process.env.NODE_ENV === "production" ? {
   mode: "history",
   base: process.env.BASE_URL + "/pc",
+} : {
+  mode: "hash"
+}
+const router = new VueRouter({
+  ...HISTORYBASS,
   routes
 });
 
